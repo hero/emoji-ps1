@@ -5,14 +5,14 @@
 **Table of Contents**
 - [Emoji Command Prompt 💻](#emoji-command-prompt-)
   - [:package: Installation](#package-installation)
-    - [<img src="https://user-images.githubusercontent.com/2320747/131363393-c2f28fdf-7675-49f2-bc8a-42b62936a877.png" width="20px"/> With OhMyZsh](#-with-ohmyzsh)
-    - [<img src="https://user-images.githubusercontent.com/2320747/131363393-c2f28fdf-7675-49f2-bc8a-42b62936a877.png" width="20px"/> Without OhMyZsh](#-without-ohmyzsh)
-  - [:drum: Features & Customization :hammer_and_wrench:](#drum-features--customization-hammer_and_wrench)
-    - [:spiral_calendar: Schedule](#spiral_calendar-schedule)
+    - [ With OhMyZsh](#-with-ohmyzsh)
+    - [ Without OhMyZsh](#-without-ohmyzsh)
+  - [:drum: Features \& Customization :hammer\_and\_wrench:](#drum-features--customization-hammer_and_wrench)
+    - [:spiral\_calendar: Schedule](#spiral_calendar-schedule)
     - [🎮 Animation](#-animation)
     - [🦾 Automating animations](#-automating-animations)
     - [✅ Finishing tasks](#-finishing-tasks)
-  - [🍻 Contribution & Request](#-contribution--request)
+  - [🍻 Contribution \& Request](#-contribution--request)
   - [🎫 License](#-license)
 
 ## :package: Installation
@@ -26,8 +26,10 @@ cd emoji-ps1
 This is written on top of the [robbyrussell](https://github.com/ohmyzsh/ohmyzsh/wiki/Themes#robbyrussell) (default) theme.
 ```sh
 # Link it to the custom themes folder
-ln $PWD/emoji.js $HOME/.oh-my-zsh/custom/themes/emoji.js
-ln $PWD/emoji.zsh-theme  $HOME/.oh-my-zsh/custom/themes/emoji.zsh-theme
+cp emoji.js $HOME/.oh-my-zsh/custom/themes/emoji.js
+cp emoji.zsh-theme  $HOME/.oh-my-zsh/custom/themes/emoji.zsh-theme
+# or
+cp emoji.* $HOME/.oh-my-zsh/custom/themes/
 ```
 Set the theme in `~/.zshrc` file
 ```sh

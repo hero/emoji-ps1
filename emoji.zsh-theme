@@ -8,32 +8,37 @@ ZSH_THEME_GIT_PROMPT_SUFFIX="%{$reset_color%} "
 ZSH_THEME_GIT_PROMPT_DIRTY="%{$fg[blue]%}) %{$fg[yellow]%}✗"
 ZSH_THEME_GIT_PROMPT_CLEAN="%{$fg[blue]%})"
 
+if [[ ! -d $HOME/.local/tmp ]]; then
+  mkdir -p $HOME/.local/tmp
+fi
+echo "" > $HOME/.local/tmp/psanimatesleep
+
 function pstaskover {
   export PS_TASK_OVER="$(date +%H%M)"
   trap 'unset PS_TASK_OVER' SIGUSR1
   p=$$
   ( sleep 3600; kill -SIGUSR1 $p ) &
   # echo "export PS_TASK_OVER=""" | at now + 1 hour
-  # touch /tmp/psanimatepid-$$
-  # [ ! -z `cat /tmp/psanimatepid-$$` ] && psanimate `cat /tmp/psanimatesleep`
+  # touch $HOME/.local/tmp/psanimatepid-$$
+  # [ ! -z `cat $HOME/.local/tmp/psanimatepid-$$` ] && psanimate `cat $HOME/.local/tmp/psanimatesleep`
   psanimate_stop
   return 0
 }
 
 psanimate_stop() {
-  touch /tmp/psanimatepid-$$
-  PID=`cat /tmp/psanimatepid-$$`
+  touch $HOME/.local/tmp/psanimatepid-$$
+  PID=`cat $HOME/.local/tmp/psanimatepid-$$`
   if [[ ! -z "$PID" ]]
     then
     (kill $PID > /dev/null 2>&1)
   fi
-  rm /tmp/psanimatepid-$$
+  rm $HOME/.local/tmp/psanimatepid-$$
   return 0
 }
-echo "" > /tmp/psanimatesleep
+
 psanimate() {
   SLEEP_TIMER=${1:-'1'}
-  echo "$SLEEP_TIMER" > /tmp/psanimatesleep
+  echo "$SLEEP_TIMER" > $HOME/.local/tmp/psanimatesleep
   psanimate_stop
   _ps_emoji_animation() {
     S="\033[s"
@@ -49,7 +54,7 @@ psanimate() {
       sleep $SLEEP_TIMER
     done
   }
-  (_ps_emoji_animation & ; echo "$!" > /tmp/psanimatepid-$$)
+  (_ps_emoji_animation & ; echo "$!" > $HOME/.local/tmp/psanimatepid-$$)
   return 0
 }
 
@@ -68,7 +73,7 @@ PS_AUTO_ANIMATE=0
     done
   }
   if [[ $PS_AUTO_ANIMATE == 1 ]];then
-    _psautoanimator & ; echo "$!" > /tmp/psautoanimator-$$
+    _psautoanimator & ; echo "$!" > $HOME/.local/tmp/psautoanimator-$$
   fi
 )
 
@@ -78,13 +83,13 @@ function pscleanup {
   unset PS_TASK_OVER
 
   # _psautoanimator_kill
-  touch /tmp/psautoanimator-$$
-  PID=`cat /tmp/psautoanimator-$$`
+  touch $HOME/.local/tmp/psautoanimator-$$
+  PID=`cat $HOME/.local/tmp/psautoanimator-$$`
   if [[ ! -z "$PID" ]]
     then
     (kill $PID > /dev/null 2>&1)
   fi
-  rm /tmp/psautoanimator-$$
+  rm $HOME/.local/tmp/psautoanimator-$$
 }
 
 trap pscleanup EXIT
