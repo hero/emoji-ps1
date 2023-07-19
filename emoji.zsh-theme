@@ -11,7 +11,6 @@ ZSH_THEME_GIT_PROMPT_CLEAN="%{$fg[blue]%})"
 if [[ ! -d $HOME/.local/tmp ]]; then
   mkdir -p $HOME/.local/tmp
 fi
-echo "" > $HOME/.local/tmp/psanimatesleep
 
 function pstaskover {
   export PS_TASK_OVER="$(date +%H%M)"
@@ -35,6 +34,7 @@ psanimate_stop() {
   rm $HOME/.local/tmp/psanimatepid-$$
   return 0
 }
+echo "" > $HOME/.local/tmp/psanimatesleep
 
 psanimate() {
   SLEEP_TIMER=${1:-'1'}
@@ -47,7 +47,7 @@ psanimate() {
     while [ : ]
     do
       SWITCH=$((1-SWITCH))
-      EMOJI=`$HOME/.nvm/versions/node/v16.6.0/bin/node $HOME/.oh-my-zsh/custom/themes/emoji.js $SWITCH`
+      EMOJI=`node $HOME/.oh-my-zsh/custom/themes/emoji.js $SWITCH`
       LEN=${#EMOJI}
       POS="\033[1000D\033[0C"
       eval echo -ne '$S$POS$EMOJI$U'
